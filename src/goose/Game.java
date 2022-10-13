@@ -51,28 +51,6 @@ public class Game implements Emoji{
     }
 
     private void startup() {
-//                try {
-//                    File myObj = new File("src/settings.txt");
-//                    Scanner myReader = new Scanner(myObj);
-//                    int line = 1;
-//                    while (myReader.hasNextLine()) {
-//                        String data = myReader.nextLine();
-//                        if(line==2){
-//                            antiInstaWin=Boolean.parseBoolean(data);
-//                        }
-//                        if(line==4){
-//                            continueAfterWin=Boolean.parseBoolean(data);
-//                        }
-//                        if(line==6){
-//                            shareSpaces=Boolean.parseBoolean(data);
-//                        }
-//                        line++;
-//                    }
-//                    myReader.close();
-//                } catch (FileNotFoundException e) {
-//                    System.out.println("An error occurred.");
-//                    e.printStackTrace();
-//                }
         System.out.println("Amount of players: ");
         Scanner s1 = new Scanner(System.in);
         geese = new Goose[s1.nextInt()];

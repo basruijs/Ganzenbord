@@ -1,8 +1,6 @@
 package goose;
 
-import goose.squares.GooseSquare;
-import goose.squares.SpecialSquare;
-import goose.squares.Square;
+import goose.squares.*;
 
 public class Board implements Emoji {
 
@@ -14,31 +12,31 @@ public class Board implements Emoji {
         for (int i = 0; i < size; i++) {
             switch (i){
                 case 63:
-                    squares[i] = new SpecialSquare(i,"Finish", CHECKERED_FLAG);
+                    squares[i] = new FinishSquare(i);
                     break;
                 case 0:
-                    squares[i] = new SpecialSquare(i, "Start", ARROW_RIGHT);
+                    squares[i] = new StartSquare(i);
                     break;
                 case 5,9,14,18,23,27,32,36,41,45,50,54,59:
-                    squares[i] = new GooseSquare(i,"Goose", BIRD);
+                    squares[i] = new GooseSquare(i);
                     break;
                 case 6:
-                    squares[i] = new SpecialSquare(i, "Bridge", RAINBOW);
+                    squares[i] = new BridgeSquare(i);
                     break;
                 case 19:
-                    squares[i] = new SpecialSquare(i, "Inn", HOUSE);
+                    squares[i] = new InnSquare(i);
                     break;
                 case 31:
-                    squares[i] = new SpecialSquare(i, "Well", HOLE);
+                    squares[i] = new WellSquare(i);
                     break;
                 case 42:
-                    squares[i] = new SpecialSquare(i, "Maze", EVERGREEN_TREE);
+                    squares[i] = new MazeSquare(i);
                     break;
                 case 52:
-                    squares[i] = new SpecialSquare(i, "Prison", CASTLE);
+                    squares[i] = new PrisonSquare(i);
                     break;
                 case 58:
-                    squares[i] = new SpecialSquare(i, "Death", SKULL);
+                    squares[i] = new DeathSquare(i);
                     break;
                 default:
                     squares[i] = new Square(i);
