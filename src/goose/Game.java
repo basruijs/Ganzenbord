@@ -1,10 +1,8 @@
 package goose;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 

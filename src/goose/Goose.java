@@ -9,14 +9,14 @@ public class Goose implements Color, Emoji{
     String printColor;
     int position;
     boolean firstRoll;
-    boolean isTrapped;
+    boolean skipTurn;
     boolean isImprisoned;
     boolean bot;
 
     public Goose(String color){
         this.color=color;
         firstRoll=true;
-        isTrapped=false;
+        skipTurn =false;
         isImprisoned=false;
         printColor = makePrintColor();
     }
@@ -37,38 +37,32 @@ public class Goose implements Color, Emoji{
         return  this + " " + printColor + color + ANSI_RESET;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public void walk(int movement, Board board, Goose[] geese){
         int origin=this.position;
         move(movement, board, geese, origin);
     }
     public void move(int movement, Board board, Goose[] geese, int origin){
-        if(isTrapped){
+        if(skipTurn){
             System.out.println("Skip turn, " + this.getName() + " goose");
         }
         if(isImprisoned){
             System.out.println("You are stuck, " + this.getName() + " goose");
         }
-        if(!isTrapped && !isImprisoned) {
+        if(!skipTurn && !isImprisoned) {
             this.position += movement;
             if (this.position > (board.size - 1)) {
                 int overflow = this.position - (board.size - 1);
                 this.position = (board.size - 1);
-                System.out.println(overflow);
+                System.out.println(LIGHTNING + "The " + this.getName() + " goose went too far! They must move " + overflow + " back");
                 this.move(-(overflow), board, geese, origin);
             }
             freeGoose(origin, position, geese);
             checkPosition(this, geese, origin, movement, board);
-        } else if (!isImprisoned){
-            this.isTrapped=false;
+        } else if (skipTurn && !isImprisoned){
+            this.skipTurn =false;
         } else {
-            if(lastPlayer(geese) && Config.lastPlayerFreedWell && this.position==31){
-                free();
-            }
-            if(lastPlayer(geese) && Config.lastPlayerFreedPrison && this.position==52){
+            if(lastPlayer(geese) && ((Config.lastPlayerFreedWell && this.position==31)
+                    || (Config.lastPlayerFreedPrison && this.position==52))){
                 free();
             }
         }
@@ -126,7 +120,7 @@ public class Goose implements Color, Emoji{
     }
 
     public void skip(){
-        this.isTrapped = true;
+        this.skipTurn = true;
     }
 
     public void imprison() {
@@ -136,7 +130,7 @@ public class Goose implements Color, Emoji{
     public void free(){
         System.out.println("The " + getName() + " goose has been freed");
         isImprisoned = false;
-        isTrapped = false;
+        skipTurn = false;
     }
 
     @Override
