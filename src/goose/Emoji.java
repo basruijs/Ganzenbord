@@ -27,5 +27,6 @@ public interface Emoji {
     String SIREN = "\uD83D\uDEA8"; //🚨
     String SKULL_AND_CROSSBONES = "☠"; //☠
     String HATCHING_EGG = "\uD83D\uDC23"; //🐣
-    
+    String HURT = "\uD83E\uDD15"; //🤕
+    String ROBOT = "\uD83E\uDD16"; //🤖
 }

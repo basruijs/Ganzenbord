@@ -10,9 +10,9 @@ public class DeathSquare extends SpecialSquare {
 
     @Override
     public void run(int totalValue, Goose goose, Board board, Goose[] geese, int origin) {
-        System.out.println(SKULL + " The " + goose.getColor() + " has fallen in battle on " + goose.getPosition());
+        System.out.println(SKULL + " The " + goose.getName() + " has fallen in battle on " + goose.getPosition());
         goose.move(-58, board, geese, origin);
-        System.out.println(HATCHING_EGG+" A new " + goose.getColor() + " goose has risen to fulfill the prophecy on space "
+        System.out.println(HATCHING_EGG+" A new " + goose.getName() + " goose has risen to fulfill the prophecy on space "
                 + goose.getPosition());
     }
 }

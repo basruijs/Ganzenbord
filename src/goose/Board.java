@@ -4,10 +4,11 @@ import goose.squares.*;
 
 public class Board implements Emoji {
 
-    int size = 64;
+    int size;
     Square[] squares = new Square[size];
 
-    public Board(){
+    public Board(int size){
+        this.size = size;
 
         for (int i = 0; i < size; i++) {
             switch (i){

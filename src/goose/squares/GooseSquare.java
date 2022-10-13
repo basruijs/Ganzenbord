@@ -14,7 +14,7 @@ public class GooseSquare extends SpecialSquare{
         System.out.println(SPARKLES + " A magical goose rests on space " + goose.getPosition());
         goose.move(totalValue, board, geese, origin);
         if(!checkBump(geese, origin, board, goose)) {
-            System.out.println(SPARKLES + BIRD + SPARKLES + "You goose'd to space " + goose.getPosition());
+            System.out.println(SPARKLES + BIRD + SPARKLES + " You goose'd to space " + goose.getPosition());
         }
     }
 

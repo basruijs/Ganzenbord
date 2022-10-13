@@ -1,10 +1,11 @@
 package goose.squares;
 
 import goose.Board;
+import goose.Emoji;
 import goose.Game;
 import goose.Goose;
 
-public class Square {
+public class Square implements Emoji {
 
     int id;
 
@@ -21,7 +22,7 @@ public class Square {
             for (int i = 0; i < geese.length; i++) {
                 if (board.getSquare(goose.getPosition()) == board.getSquare(geese[i].getPosition()) && goose != geese[i]) {
                     goose.setPosition(origin);
-                    System.out.println("You bumped into the " + geese[i].getColor() + " goose!");
+                    System.out.println(HURT + " You bumped into the " + geese[i].getName() + " goose! ");
                     return true;
                 }
             }

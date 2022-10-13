@@ -1,8 +1,6 @@
 package goose;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -17,7 +15,8 @@ public class Game implements Emoji{
     Goose[] geese;
     Die d1 = new Die();
     Die d2 = new Die();
-    Board board = new Board();
+    Board board;
+
     int player;
     Goose goose;
 
@@ -29,6 +28,8 @@ public class Game implements Emoji{
     public static boolean passToFreeWell = false;
     public static boolean lastPlayerFreedPrison = false;
     public static boolean passToFreePrison = false;
+
+    public static int boardSize = 64;
 
     public static void main(String[] args) throws InterruptedException, IOException {
         String configFilePath = "src/config.properties";
@@ -46,11 +47,13 @@ public class Game implements Emoji{
         passToFreePrison = Boolean.parseBoolean(prop.getProperty("passToFreePrison"));
 
         Game game = new Game();
+
         game.startup();
         game.playGame();
     }
 
     private void startup() {
+        board = new Board(boardSize);
         System.out.println("Amount of players: ");
         Scanner s1 = new Scanner(System.in);
         geese = new Goose[s1.nextInt()];
@@ -59,7 +62,7 @@ public class Game implements Emoji{
         int botAmount = s2.nextInt();
         for (int i = 0; i < geese.length; i++) {
             if(i<botAmount){
-                System.out.println("Bot " + (i + 1) + " pick a color: ");
+                System.out.println(ROBOT + " Bot " + (i + 1) + " pick a color: ");
                 Scanner s3 = new Scanner(System.in);
                 String name = s3.nextLine();
                 if(Objects.equals(name, "")){
@@ -68,7 +71,7 @@ public class Game implements Emoji{
                 geese[i] = new Goose(name);
                 geese[i].setBot(true);
             } else {
-                System.out.println("Goose " + (i + 1) + " pick a color: ");
+                System.out.println(DUCK + " Goose " + (i + 1) + " pick a color: ");
                 Scanner s3 = new Scanner(System.in);
                 String name = s3.nextLine();
                 if(Objects.equals(name, "")){
@@ -97,7 +100,7 @@ public class Game implements Emoji{
         boolean finished = true;
         ArrayList<Goose> geeses = new ArrayList<>();
         for (int i = 0; i < geese.length; i++) {
-            System.out.println(geese[i].getColor() + ", Press ENTER to roll: ");
+            System.out.println(geese[i].getName() + ", Press ENTER to roll: ");
             Scanner s = new Scanner(System.in);
             if(geese[i].isBot()){
 
@@ -125,7 +128,7 @@ public class Game implements Emoji{
             determinePlayer(gooses);
         }
 
-        System.out.println(geese[highestGoose].getColor() + " is the first goose");
+        System.out.println(geese[highestGoose].getName() + " is the first goose");
 
         return highestGoose;
     }
@@ -135,7 +138,7 @@ public class Game implements Emoji{
             if(!goose.isWon()) {
                 int origin = goose.getPosition();
                 Scanner s = new Scanner(System.in);
-                System.out.println("Press ENTER to roll dice, honorable " + goose.printColor + goose.getColor() +
+                System.out.println("Press ENTER to roll dice, honorable " + goose.printColor + goose.getName() +
                         ANSI_RESET + " goose. Your current position is " + goose.getPosition());
                 String input = "";
                 if (goose.isBot()) {
@@ -158,7 +161,7 @@ public class Game implements Emoji{
                 }
 
 
-                System.out.println("Goose " + goose.getColor() + " departs from space " + goose.getPosition());
+                System.out.println("Goose " + goose.getName() + " departs from space " + goose.getPosition());
                 if (goose.isFirstRoll() || (goose.position == 0 && antiInstaWin)) {
                     goose.setFirstRoll(false);
                     if ((d1.getValue() == 5 || d2.getValue() == 5) && (d1.getValue() == 4 || d2.getValue() == 4)) {
@@ -175,7 +178,7 @@ public class Game implements Emoji{
                     goose.walk(totalValue, board, geese);
                 }
 
-                System.out.println("Goose " + goose.getColor() + " is on " + goose.getPosition());
+                System.out.println("Goose " + goose.getName() + " is on " + goose.getPosition());
                 printBoard(origin);
             }
             nextPlayer();

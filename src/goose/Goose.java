@@ -147,8 +147,8 @@ public class Goose implements Color, Emoji{
         this.position = position;
     }
 
-    public String getColor() {
-        return  printColor + color + ANSI_RESET;
+    public String getName() {
+        return  this + " " + printColor + color + ANSI_RESET;
     }
 
     public void setColor(String color) {
@@ -161,10 +161,10 @@ public class Goose implements Color, Emoji{
     }
     public void move(int movement, Board board, Goose[] geese, int origin){
         if(isTrapped){
-            System.out.println("Skip turn, " + this.getColor() + " goose");
+            System.out.println("Skip turn, " + this.getName() + " goose");
         }
         if(isImprisoned){
-            System.out.println("You are stuck, " + this.getColor() + " goose");
+            System.out.println("You are stuck, " + this.getName() + " goose");
         }
         if(!isTrapped && !isImprisoned) {
             this.position += movement;
@@ -192,8 +192,8 @@ public class Goose implements Color, Emoji{
         if((hasPassed(origin, position, 31) && Game.passToFreeWell) || this.position==31){
             for (Goose goose : geese) {
                 if (goose!=this && (goose.isImprisoned && goose.getPosition() == 31)) {
-                    System.out.println("the " + this.getColor() + " goose has helped the "
-                            + goose.getColor() + "out of the well");
+                    System.out.println("the " + this.getName() + " goose has helped the "
+                            + goose.getName() + "out of the well");
                     goose.free();
 
                 }
@@ -203,8 +203,8 @@ public class Goose implements Color, Emoji{
         if((hasPassed(origin, position, 52) && Game.passToFreePrison) || this.position==52){
             for (Goose goose : geese) {
                 if (goose!=this && (goose.isImprisoned && goose.getPosition() == 52)) {
-                    System.out.println("the " + this.getColor() + " goose has broken the "
-                            + goose.getColor() + " out of prison");
+                    System.out.println("the " + this.getName() + " goose has broken the "
+                            + goose.getName() + " out of prison");
                     goose.free();
 
                 }
@@ -248,7 +248,7 @@ public class Goose implements Color, Emoji{
     }
 
     public void free(){
-        System.out.println("The " + getColor() + " has been freed");
+        System.out.println("The " + getName() + " goose has been freed");
         isImprisoned = false;
         isTrapped = false;
     }
