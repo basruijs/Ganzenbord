@@ -10,8 +10,8 @@ public class Game{
 
     public static boolean keepGoing = true;
     Goose[] geese;
-    Die d1 = new Die();
-    Die d2 = new Die();
+    public static Die d1 = new Die();
+    public static Die d2 = new Die();
     Board board;
 
     int player;
@@ -125,18 +125,10 @@ public class Game{
                 totalValue=cheat(input, totalValue);
 
 
+                goose.move(totalValue, board, geese, origin);
+
+
                 System.out.println("Goose " + goose.getName() + " departs from space " + goose.getPosition());
-                //TODO move to GooseSquare
-                if (goose.isFirstRoll() || (goose.position == 0 && Config.antiInstaWin)) {
-                    goose.setFirstRoll(false);
-                    if(totalValue == 9){
-                        firstRollMove(board,goose,geese,origin);
-                    } else {
-                        goose.move(totalValue, board, geese, origin);
-                    }
-                } else {
-                    goose.walk(totalValue, board, geese);
-                }
 
                 System.out.println("Goose " + goose.getName() + " is on " + goose.getPosition());
                 board.printBoard(origin, geese, goose);
@@ -169,15 +161,7 @@ public class Game{
         return totalValue;
     }
 
-    private void firstRollMove(Board board, Goose goose, Goose[] geese, int origin) {
-        if ((d1.getValue() == 5 || d2.getValue() == 5) && (d1.getValue() == 4 || d2.getValue() == 4)) {
-            goose.move(53, board, geese, origin);
-            System.out.println("You jumped to 53");
-        } else if ((d1.getValue() == 6 || d2.getValue() == 6) && (d1.getValue() == 3 || d2.getValue() == 3)) {
-            goose.move(26, board, geese, origin);
-            System.out.println("You jumped to 26");
-        }
-    }
+
 
     private void nextPlayer() {
         player++;
