@@ -1,9 +1,6 @@
 package goose.squares;
 
-import goose.Board;
-import goose.Emoji;
-import goose.Game;
-import goose.Goose;
+import goose.*;
 
 public class Square implements Emoji {
 
@@ -18,7 +15,7 @@ public class Square implements Emoji {
     }
 
     public boolean checkBump(Goose[] geese, int origin, Board board, Goose goose) {
-        if(!Game.shareSpaces) {
+        if(!Config.shareSpaces) {
             for (int i = 0; i < geese.length; i++) {
                 if (board.getSquare(goose.getPosition()) == board.getSquare(geese[i].getPosition()) && goose != geese[i]) {
                     goose.setPosition(origin);
@@ -34,6 +31,10 @@ public class Square implements Emoji {
 
     @Override
     public String toString() {
-        return Integer.toString(id);
+        if(id<10){
+            return "0" + id;
+        } else {
+            return Integer.toString(id);
+        }
     }
 }

@@ -4,7 +4,6 @@ import goose.Board;
 import goose.Goose;
 
 public class StartSquare extends SpecialSquare {
-
     public StartSquare(int id) {
         super(id, ARROW_RIGHT);
     }

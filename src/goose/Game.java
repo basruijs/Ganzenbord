@@ -8,8 +8,7 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class Game implements Emoji{
-    public static final String ANSI_RESET = "\u001B[0m";
+public class Game implements Emoji, Color {
 
     public static boolean keepGoing = true;
     Goose[] geese;
@@ -20,53 +19,28 @@ public class Game implements Emoji{
     int player;
     Goose goose;
 
-    public static boolean antiInstaWin = false;
-    public static boolean continueAfterWin = false;
-    public static boolean shareSpaces = false;
-
-    public static boolean lastPlayerFreedWell = false;
-    public static boolean passToFreeWell = false;
-    public static boolean lastPlayerFreedPrison = false;
-    public static boolean passToFreePrison = false;
-
-    public static int boardSize = 64;
-
     public static void main(String[] args) throws InterruptedException, IOException {
-        String configFilePath = "src/config.properties";
-        FileInputStream propsInput = new FileInputStream(configFilePath);
-        Properties prop = new Properties();
-        prop.load(propsInput);
-
-        antiInstaWin = Boolean.parseBoolean(prop.getProperty("antiInstaWin"));
-        continueAfterWin = Boolean.parseBoolean(prop.getProperty("continueAfterWin"));
-        shareSpaces = Boolean.parseBoolean(prop.getProperty("shareSpaces"));
-
-        lastPlayerFreedWell = Boolean.parseBoolean(prop.getProperty("lastPlayerFreedWell"));
-        passToFreeWell = Boolean.parseBoolean(prop.getProperty("passToFreeWell"));
-        lastPlayerFreedPrison = Boolean.parseBoolean(prop.getProperty("lastPlayerFreedPrison"));
-        passToFreePrison = Boolean.parseBoolean(prop.getProperty("passToFreePrison"));
-
-        Game game = new Game();
-
-        game.startup();
-        game.playGame();
+        Config config = new Config();
     }
 
-    private void startup() {
-        board = new Board(boardSize);
+    void startup() {
+        board = new Board(Config.boardSize);
+
         System.out.println("Amount of players: ");
         Scanner s1 = new Scanner(System.in);
         geese = new Goose[s1.nextInt()];
+
         System.out.println("How many are bots?");
         Scanner s2 = new Scanner(System.in);
         int botAmount = s2.nextInt();
+
         for (int i = 0; i < geese.length; i++) {
-            if(i<botAmount){
+            if (i < botAmount) {
                 System.out.println(ROBOT + " Bot " + (i + 1) + " pick a color: ");
                 Scanner s3 = new Scanner(System.in);
                 String name = s3.nextLine();
-                if(Objects.equals(name, "")){
-                    name= String.valueOf((i+1));
+                if (Objects.equals(name, "")) {
+                    name = String.valueOf((i + 1));
                 }
                 geese[i] = new Goose(name);
                 geese[i].setBot(true);
@@ -74,23 +48,25 @@ public class Game implements Emoji{
                 System.out.println(DUCK + " Goose " + (i + 1) + " pick a color: ");
                 Scanner s3 = new Scanner(System.in);
                 String name = s3.nextLine();
-                if(Objects.equals(name, "")){
-                    name= String.valueOf((i+1));
+                if (Objects.equals(name, "")) {
+                    name = String.valueOf((i + 1));
                 }
                 geese[i] = new Goose(name);
             }
-
         }
 
-        for (int i = 0; i < geese.length; i++) {
-
-            geese[i].setPosition(0);
+        for (Goose value : geese) {
+            value.setPosition(0);
         }
+
         player = determinePlayer(geese);
         goose = geese[player];
-        for (int i = 0; i < geese.length; i++) {
-            System.out.print(geese[i]);
+        System.out.println(goose.getName() + " is the first goose");
+
+        for (Goose value : geese) {
+            System.out.print(value);
         }
+
         System.out.println();
     }
 
@@ -102,14 +78,15 @@ public class Game implements Emoji{
         for (int i = 0; i < geese.length; i++) {
             System.out.println(geese[i].getName() + ", Press ENTER to roll: ");
             Scanner s = new Scanner(System.in);
-            if(geese[i].isBot()){
 
-            } else {
+            if (!geese[i].isBot()) {
                 s.nextLine();
             }
 
             d1.roll();
+
             System.out.println("You rolled " + d1.getValue());
+
             if (highestRoll < d1.getValue()) {
                 highestRoll = d1.getValue();
                 highestGoose = i;
@@ -118,7 +95,6 @@ public class Game implements Emoji{
                 finished = false;
                 geeses.add(geese[i]);
             }
-
         }
         if (!finished) {
             Goose[] gooses = new Goose[geeses.size()];
@@ -127,50 +103,34 @@ public class Game implements Emoji{
             }
             determinePlayer(gooses);
         }
-
-        System.out.println(geese[highestGoose].getName() + " is the first goose");
-
         return highestGoose;
     }
 
-    private void playGame() throws InterruptedException {
+    void playGame() throws InterruptedException {
         while (keepGoing) {
-            if(!goose.isWon()) {
+            if (!goose.isWon()) {
                 int origin = goose.getPosition();
+
                 Scanner s = new Scanner(System.in);
                 System.out.println("Press ENTER to roll dice, honorable " + goose.printColor + goose.getName() +
                         ANSI_RESET + " goose. Your current position is " + goose.getPosition());
                 String input = "";
+
                 if (goose.isBot()) {
                     TimeUnit.SECONDS.sleep(1);
                 } else {
                     input = s.nextLine();
                 }
-                d1.roll();
-                d2.roll();
 
-                int totalValue = d1.getValue() + d2.getValue();
-                System.out.println(DICE + d1.getValue() + " + " + DICE + d2.getValue() + " = " + totalValue);
-                try {
-                    if (Integer.parseInt(input) > 0 && Integer.parseInt(input) < 64) {
-                        totalValue = Integer.parseInt(input);
-                        System.out.println("You cheated, position is now " + totalValue);
-                    }
-                } catch (Exception e) {
+                int totalValue = rollDice();
 
-                }
-
+                totalValue=cheat(input, totalValue);
 
                 System.out.println("Goose " + goose.getName() + " departs from space " + goose.getPosition());
-                if (goose.isFirstRoll() || (goose.position == 0 && antiInstaWin)) {
+                if (goose.isFirstRoll() || (goose.position == 0 && Config.antiInstaWin)) {
                     goose.setFirstRoll(false);
-                    if ((d1.getValue() == 5 || d2.getValue() == 5) && (d1.getValue() == 4 || d2.getValue() == 4)) {
-                        goose.setPosition(53);
-                        System.out.println("You jumped to 53");
-                    } else if ((d1.getValue() == 6 || d2.getValue() == 6) && (d1.getValue() == 3 || d2.getValue() == 3)) {
-                        goose.setPosition(26);
-                        System.out.println("You jumped to 26");
-
+                    if(totalValue == 9){
+                        firstRollMove(board,goose,geese,origin);
                     } else {
                         goose.move(totalValue, board, geese, origin);
                     }
@@ -179,43 +139,44 @@ public class Game implements Emoji{
                 }
 
                 System.out.println("Goose " + goose.getName() + " is on " + goose.getPosition());
-                printBoard(origin);
+                board.printBoard(origin, geese, goose);
             }
+
             nextPlayer();
         }
     }
 
-    private void printBoard(int origin) {
+    private int rollDice() {
+        d1.roll();
+        d2.roll();
 
-        String print = "";
-        for (int i = 0; i < 64; i++) {
-            print = String.valueOf(board.getSquare(i));
-            if((i>origin && i<goose.getPosition()) || (i<origin && i>goose.getPosition())){
-                print = goose.printColor + board.getSquare(i) + ANSI_RESET;
+        int totalValue = d1.getValue() + d2.getValue();
+
+        System.out.println(DICE + d1.getValue() + " + " + DICE + d2.getValue() + " = " + totalValue);
+
+        return totalValue;
+    }
+
+    private int cheat(String input, int totalValue) {
+        try {
+            if (Integer.parseInt(input) > 0 && Integer.parseInt(input) < 64) {
+                totalValue = Integer.parseInt(input);
+                System.out.println("You cheated, position is now " + totalValue);
             }
+        } catch (Exception ignored) {
 
-
-            String printedGeese = "";
-            for (int j = 0; j < geese.length; j++) {
-                if (geese[j].getPosition() == i) {
-                    printedGeese += String.valueOf(geese[j]);
-                }
-            }
-            if(!printedGeese.equals("")) {
-                print = printedGeese;
-            }
-
-            System.out.print(print);
-
-            System.out.print("|");
-            if (i == 31) {
-                System.out.println();
-                System.out.print("|");
-            }
         }
+        return totalValue;
+    }
 
-        System.out.println();
-        System.out.println();
+    private void firstRollMove(Board board, Goose goose, Goose[] geese, int origin) {
+        if ((d1.getValue() == 5 || d2.getValue() == 5) && (d1.getValue() == 4 || d2.getValue() == 4)) {
+            goose.move(53, board, geese, origin);
+            System.out.println("You jumped to 53");
+        } else if ((d1.getValue() == 6 || d2.getValue() == 6) && (d1.getValue() == 3 || d2.getValue() == 3)) {
+            goose.move(26, board, geese, origin);
+            System.out.println("You jumped to 26");
+        }
     }
 
     private void nextPlayer() {

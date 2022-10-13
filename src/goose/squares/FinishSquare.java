@@ -1,6 +1,7 @@
 package goose.squares;
 
 import goose.Board;
+import goose.Config;
 import goose.Game;
 import goose.Goose;
 
@@ -17,7 +18,7 @@ public class FinishSquare extends SpecialSquare {
         goose.setWon(true);
         System.out.println(goose.getName() +
                 " goose won!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        if (Game.continueAfterWin) {
+        if (Config.continueAfterWin) {
             int winningGeese = 0;
             for (int i = 0; i < geese.length; i++) {
 
