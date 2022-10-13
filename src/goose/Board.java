@@ -2,7 +2,7 @@ package goose;
 
 import goose.squares.*;
 
-public class Board implements Emoji, Color {
+public class Board {
 
     int size;
     Square[] squares;
@@ -33,7 +33,7 @@ public class Board implements Emoji, Color {
         for (int i = 0; i < 64; i++) {
             print = String.valueOf(squares[i]);
             if ((i > origin && i < goose.getPosition()) || (i < origin && i > goose.getPosition())) {
-                print = goose.printColor + squares[i] + ANSI_RESET;
+                print = goose.printColor + squares[i] + Color.ANSI_RESET;
             }
 
             StringBuilder printedGeese = new StringBuilder();

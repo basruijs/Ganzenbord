@@ -2,7 +2,7 @@ package goose.squares;
 
 import goose.*;
 
-public class Square implements Emoji {
+public class Square{
 
     int id;
 
@@ -19,7 +19,7 @@ public class Square implements Emoji {
             for (int i = 0; i < geese.length; i++) {
                 if (board.getSquare(goose.getPosition()) == board.getSquare(geese[i].getPosition()) && goose != geese[i]) {
                     goose.setPosition(origin);
-                    System.out.println(HURT + " You bumped into the " + geese[i].getName() + " goose! ");
+                    System.out.println(Emoji.HURT + " You bumped into the " + geese[i].getName() + " goose! ");
                     return true;
                 }
             }

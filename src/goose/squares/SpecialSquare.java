@@ -7,7 +7,7 @@ import goose.Goose;
 
 import java.util.Objects;
 
-public class SpecialSquare extends Square implements Emoji {
+public class SpecialSquare extends Square {
     String type;
     String indicator;
 

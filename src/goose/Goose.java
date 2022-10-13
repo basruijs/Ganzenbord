@@ -2,7 +2,7 @@ package goose;
 
 import goose.squares.Square;
 
-public class Goose implements Color, Emoji{
+public class Goose{
     public boolean won;
 
     String color;
@@ -34,7 +34,7 @@ public class Goose implements Color, Emoji{
     }
 
     public String getName() {
-        return  this + " " + printColor + color + ANSI_RESET;
+        return  this + " " + printColor + color + Color.ANSI_RESET;
     }
 
     public void walk(int movement, Board board, Goose[] geese){
@@ -51,9 +51,10 @@ public class Goose implements Color, Emoji{
         if(!skipTurn && !isImprisoned) {
             this.position += movement;
             if (this.position > (board.size - 1)) {
+                //TODO: try/catch voor overflow
                 int overflow = this.position - (board.size - 1);
                 this.position = (board.size - 1);
-                System.out.println(LIGHTNING + "The " + this.getName() + " goose went too far! They must move " + overflow + " back");
+                System.out.println(Emoji.LIGHTNING + "The " + this.getName() + " goose went too far! They must move " + overflow + " back");
                 this.move(-(overflow), board, geese, origin);
             }
             freeGoose(origin, position, geese);
@@ -135,7 +136,7 @@ public class Goose implements Color, Emoji{
 
     @Override
     public String toString() {
-        return printColor + DUCK + ANSI_RESET;
+        return printColor + Emoji.DUCK + Color.ANSI_RESET;
     }
 
     public boolean isBot() {

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class Game implements Emoji, Color {
+public class Game{
 
     public static boolean keepGoing = true;
     Goose[] geese;
@@ -34,7 +34,7 @@ public class Game implements Emoji, Color {
 
         for (int i = 0; i < geese.length; i++) {
             if (i < botAmount) {
-                System.out.println(ROBOT + " Bot " + (i + 1) + " pick a color: ");
+                System.out.println(Emoji.ROBOT + " Bot " + (i + 1) + " pick a color: ");
                 Scanner s3 = new Scanner(System.in);
                 String name = s3.nextLine();
                 if (Objects.equals(name, "")) {
@@ -43,7 +43,7 @@ public class Game implements Emoji, Color {
                 geese[i] = new Goose(name);
                 geese[i].setBot(true);
             } else {
-                System.out.println(DUCK + " Goose " + (i + 1) + " pick a color: ");
+                System.out.println(Emoji.DUCK + " Goose " + (i + 1) + " pick a color: ");
                 Scanner s3 = new Scanner(System.in);
                 String name = s3.nextLine();
                 if (Objects.equals(name, "")) {
@@ -111,7 +111,7 @@ public class Game implements Emoji, Color {
 
                 Scanner s = new Scanner(System.in);
                 System.out.println("Press ENTER to roll dice, honorable " + goose.printColor + goose.getName() +
-                        ANSI_RESET + " goose. Your current position is " + goose.getPosition());
+                        Color.ANSI_RESET + " goose. Your current position is " + goose.getPosition());
                 String input = "";
 
                 if (goose.isBot()) {
@@ -124,7 +124,9 @@ public class Game implements Emoji, Color {
 
                 totalValue=cheat(input, totalValue);
 
+
                 System.out.println("Goose " + goose.getName() + " departs from space " + goose.getPosition());
+                //TODO move to GooseSquare
                 if (goose.isFirstRoll() || (goose.position == 0 && Config.antiInstaWin)) {
                     goose.setFirstRoll(false);
                     if(totalValue == 9){
@@ -139,7 +141,7 @@ public class Game implements Emoji, Color {
                 System.out.println("Goose " + goose.getName() + " is on " + goose.getPosition());
                 board.printBoard(origin, geese, goose);
             }
-
+            //TODO gans for loop maken
             nextPlayer();
         }
     }
@@ -150,7 +152,7 @@ public class Game implements Emoji, Color {
 
         int totalValue = d1.getValue() + d2.getValue();
 
-        System.out.println(DICE + d1.getValue() + " + " + DICE + d2.getValue() + " = " + totalValue);
+        System.out.println(Emoji.DICE + d1.getValue() + " + " + Emoji.DICE + d2.getValue() + " = " + totalValue);
 
         return totalValue;
     }

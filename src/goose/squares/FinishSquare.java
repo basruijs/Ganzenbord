@@ -1,16 +1,13 @@
 package goose.squares;
 
-import goose.Board;
-import goose.Config;
-import goose.Game;
-import goose.Goose;
+import goose.*;
 
 import java.util.Objects;
 
 public class FinishSquare extends SpecialSquare {
 
     public FinishSquare(int id) {
-        super(id, CHECKERED_FLAG);
+        super(id, Emoji.CHECKERED_FLAG);
     }
 
     @Override
