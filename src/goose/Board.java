@@ -7,7 +7,7 @@ public class Board {
     int size;
     Square[] squares;
 
-    public Board(int size){
+    public Board(int size) {
         this.size = size;
         squares = new Square[size];
         for (int i = 0; i < size; i++) {
@@ -51,7 +51,7 @@ public class Board {
             System.out.print(print);
             System.out.print("|");
 
-            if (i%7 == 0) {
+            if (i % 7 == 0) {
                 System.out.println();
                 System.out.print("|");
             }

@@ -6,10 +6,10 @@ public class Die {
 
     int value;
 
-    public void roll(){
+    public void roll() {
         Random random = new Random();
 
-        this.value = random.nextInt(1,6);
+        this.value = random.nextInt(1, 6);
     }
 
 

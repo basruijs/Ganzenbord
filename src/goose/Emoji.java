@@ -3,7 +3,7 @@ package goose;
 public abstract class Emoji {
     public static String CHECKERED_FLAG = "\uD83C\uDFC1"; //🏁
     public static String DUCK = "\uD83E\uDD86"; //🦆
-    public static String ARROW_RIGHT="➡"; //➡
+    public static String ARROW_RIGHT = "➡"; //➡
     public static String HOLE = "\uD83D\uDD73"; //🕳
     public static String HOUSE = "\uD83C\uDFE0"; //🏠
     public static String BRIDGE = "\uD83C\uDF09"; //🌉

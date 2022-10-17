@@ -11,7 +11,7 @@ public class SpecialSquare extends Square {
     String type;
     String indicator;
 
-    public SpecialSquare(int id, String indicator){
+    public SpecialSquare(int id, String indicator) {
         super(id);
         this.indicator = indicator;
     }

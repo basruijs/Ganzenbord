@@ -105,41 +105,41 @@ public class Game {
     }
 
     void playGame() throws InterruptedException {
-            for (int i = 0; i < geese.length; i++) {
-                Goose goose = geese[i];
-                if (!goose.isWon()) {
-                    int origin = goose.getPosition();
+        for (int i = 0; i < geese.length; i++) {
+            Goose goose = geese[i];
+            if (!goose.isWon()) {
+                int origin = goose.getPosition();
 
-                    Scanner s = new Scanner(System.in);
-                    System.out.println("Press ENTER to roll dice, honorable " + goose.printColor + goose.getName() +
-                            Color.ANSI_RESET + " goose. Your current position is " + goose.getPosition());
-                    String input = "";
+                Scanner s = new Scanner(System.in);
+                System.out.println("Press ENTER to roll dice, honorable " + goose.printColor + goose.getName() +
+                        Color.ANSI_RESET + " goose. Your current position is " + goose.getPosition());
+                String input = "";
 
-                    if (goose.isBot()) {
-                        TimeUnit.SECONDS.sleep(1);
-                    } else {
-                        input = s.nextLine();
-                    }
+                if (goose.isBot()) {
+                    TimeUnit.SECONDS.sleep(1);
+                } else {
+                    input = s.nextLine();
+                }
 
-                    int totalValue = rollDice();
+                int totalValue = rollDice();
 
-                    totalValue = cheat(input, totalValue);
+                totalValue = cheat(input, totalValue);
 
 
-                    System.out.println("Goose " + goose.getName() + " departs from space " + goose.getPosition());
-                    goose.walk(totalValue, board, geese);
+                System.out.println("Goose " + goose.getName() + " departs from space " + goose.getPosition());
+                goose.walk(totalValue, board, geese);
 
-                    System.out.println("Goose " + goose.getName() + " is on " + goose.getPosition());
-                    board.printBoard(origin, geese, goose);
-                    if(!keepGoing){
-                        break;
-                    }
-                    if (i + 1 >= geese.length) {
-                        i = -1;
-                    }
+                System.out.println("Goose " + goose.getName() + " is on " + goose.getPosition());
+                board.printBoard(origin, geese, goose);
+                if (!keepGoing) {
+                    break;
+                }
+                if (i + 1 >= geese.length) {
+                    i = -1;
                 }
             }
         }
+    }
 
     private int rollDice() {
         d1.roll();

@@ -2,7 +2,7 @@ package goose.squares;
 
 import goose.*;
 
-public class GooseSquare extends SpecialSquare{
+public class GooseSquare extends SpecialSquare {
 
     public GooseSquare(int id) {
         super(id, Emoji.BIRD);
@@ -12,7 +12,7 @@ public class GooseSquare extends SpecialSquare{
     public void run(int totalValue, Goose goose, Board board, Goose[] geese, int origin) {
         System.out.println(Emoji.SPARKLES + " A magical goose rests on space " + goose.getPosition());
         firstRollMove(board, goose, geese, origin, totalValue);
-        if(!checkBump(geese, origin, board, goose)) {
+        if (!checkBump(geese, origin, board, goose)) {
             System.out.println(Emoji.SPARKLES + Emoji.BIRD + Emoji.SPARKLES + " You goose'd to space " + goose.getPosition());
         }
     }

@@ -2,12 +2,12 @@ package goose.squares;
 
 import goose.*;
 
-public class Square{
+public class Square {
 
     int id;
 
-    public Square(int id){
-        this.id=id;
+    public Square(int id) {
+        this.id = id;
     }
 
     public void run(int totalValue, Goose goose, Board board, Goose[] geese, int origin) {
@@ -15,7 +15,7 @@ public class Square{
     }
 
     public boolean checkBump(Goose[] geese, int origin, Board board, Goose goose) {
-        if(!Config.shareSpaces) {
+        if (!Config.shareSpaces) {
             for (int i = 0; i < geese.length; i++) {
                 if (board.getSquare(goose.getPosition()) == board.getSquare(geese[i].getPosition()) && goose != geese[i]) {
                     goose.setPosition(origin);
@@ -31,7 +31,7 @@ public class Square{
 
     @Override
     public String toString() {
-        if(id<10){
+        if (id < 10) {
             return "0" + id;
         } else {
             return Integer.toString(id);

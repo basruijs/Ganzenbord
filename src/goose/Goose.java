@@ -2,7 +2,7 @@ package goose;
 
 import goose.squares.Square;
 
-public class Goose{
+public class Goose {
     public boolean won;
 
     String color;
@@ -13,11 +13,11 @@ public class Goose{
     boolean isImprisoned;
     boolean bot;
 
-    public Goose(String color){
-        this.color=color;
-        firstRoll=true;
-        skipTurn =false;
-        isImprisoned=false;
+    public Goose(String color) {
+        this.color = color;
+        firstRoll = true;
+        skipTurn = false;
+        isImprisoned = false;
         printColor = makePrintColor();
     }
 
@@ -37,42 +37,45 @@ public class Goose{
         return this + " " + printColor + color + Color.ANSI_RESET;
     }
 
-    public void walk(int movement, Board board, Goose[] geese){
-        int origin=this.position;
+    public void walk(int movement, Board board, Goose[] geese) {
+        int origin = this.position;
         move(movement, board, geese, origin);
     }
-    public void move(int movement, Board board, Goose[] geese, int origin){
-        if(skipTurn){
+
+    public void move(int movement, Board board, Goose[] geese, int origin) {
+        if (skipTurn) {
             System.out.println("Skip turn, " + this.getName() + " goose");
         }
-        if(isImprisoned){
+        if (isImprisoned) {
             System.out.println("You are stuck, " + this.getName() + " goose");
         }
-        if(!skipTurn && !isImprisoned) {
-            this.position += movement;
-            if (this.position > (board.size - 1)) {
-                //TODO: try/catch voor overflow
+        if (!skipTurn && !isImprisoned) {
+            try {
+                this.position += movement;
+                checkPosition(this, geese, origin, movement, board);
+            } catch (Exception e) {
                 int overflow = this.position - (board.size - 1);
                 this.position = (board.size - 1);
                 System.out.println(Emoji.LIGHTNING + "The " + this.getName() + " goose went too far! They must move " + overflow + " back");
                 this.move(-(overflow), board, geese, origin);
             }
+
             freeGoose(origin, position, geese);
-            checkPosition(this, geese, origin, movement, board);
-        } else if (skipTurn && !isImprisoned){
-            this.skipTurn =false;
+
+        } else if (skipTurn && !isImprisoned) {
+            this.skipTurn = false;
         } else {
-            if(lastPlayer(geese) && ((Config.lastPlayerFreedWell && this.position==31)
-                    || (Config.lastPlayerFreedPrison && this.position==52))){
+            if (lastPlayer(geese) && ((Config.lastPlayerFreedWell && this.position == 31)
+                    || (Config.lastPlayerFreedPrison && this.position == 52))) {
                 free();
             }
         }
     }
 
     private void freeGoose(int origin, int position, Goose[] geese) {
-        if((hasPassed(origin, position, 31) && Config.passToFreeWell) || this.position==31){
+        if ((hasPassed(origin, position, 31) && Config.passToFreeWell) || this.position == 31) {
             for (Goose goose : geese) {
-                if (goose!=this && (goose.isImprisoned && goose.getPosition() == 31)) {
+                if (goose != this && (goose.isImprisoned && goose.getPosition() == 31)) {
                     System.out.println("the " + this.getName() + " goose has helped the "
                             + goose.getName() + "out of the well");
                     goose.free();
@@ -81,9 +84,9 @@ public class Goose{
             }
         }
 
-        if((hasPassed(origin, position, 52) && Config.passToFreePrison) || this.position==52){
+        if ((hasPassed(origin, position, 52) && Config.passToFreePrison) || this.position == 52) {
             for (Goose goose : geese) {
-                if (goose!=this && (goose.isImprisoned && goose.getPosition() == 52)) {
+                if (goose != this && (goose.isImprisoned && goose.getPosition() == 52)) {
                     System.out.println("the " + this.getName() + " goose has broken the "
                             + goose.getName() + " out of prison");
                     goose.free();
@@ -93,21 +96,13 @@ public class Goose{
         }
     }
 
-    private boolean hasPassed(int origin, int position, int square){
-        return (square<origin && square>position);
-    }
-
-    public boolean isFirstRoll() {
-        return firstRoll;
-    }
-
-    public void setFirstRoll(boolean firstRoll) {
-        this.firstRoll = firstRoll;
+    private boolean hasPassed(int origin, int position, int square) {
+        return (square < origin && square > position);
     }
 
     public void checkPosition(Goose goose, Goose[] geese, int origin, int totalValue, Board board) {
-        Square[] squares=board.getSquares();
-        squares[position].run(totalValue,this, board, geese, origin);
+        Square[] squares = board.getSquares();
+        squares[position].run(totalValue, this, board, geese, origin);
 
     }
 
@@ -120,15 +115,15 @@ public class Goose{
         return true;
     }
 
-    public void skip(){
+    public void skip() {
         this.skipTurn = true;
     }
 
     public void imprison() {
-        isImprisoned=true;
+        isImprisoned = true;
     }
 
-    public void free(){
+    public void free() {
         System.out.println("The " + getName() + " goose has been freed");
         isImprisoned = false;
         skipTurn = false;
