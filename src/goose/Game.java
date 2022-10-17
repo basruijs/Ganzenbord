@@ -1,6 +1,5 @@
 package goose;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -17,7 +16,7 @@ public class Game {
     int player;
     Goose goose;
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) {
         Config config = new Config();
     }
 

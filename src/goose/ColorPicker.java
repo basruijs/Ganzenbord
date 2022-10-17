@@ -97,25 +97,15 @@ public interface ColorPicker {
         int color;
         Random random = new Random();
         color = random.nextInt(1, 8);
-        switch (color) {
-            case 1:
-                return Color.ANSI_BLACK;
-            case 2:
-                return Color.ANSI_RED;
-            case 3:
-                return Color.ANSI_GREEN;
-            case 4:
-                return Color.ANSI_YELLOW;
-            case 5:
-                return Color.ANSI_BLUE;
-            case 6:
-                return Color.ANSI_PURPLE;
-            case 7:
-                return Color.ANSI_CYAN;
-            case 8:
-                return Color.ANSI_WHITE;
-            default:
-                return Color.ANSI_WHITE;
-        }
+        return switch (color) {
+            case 1 -> Color.ANSI_BLACK;
+            case 2 -> Color.ANSI_RED;
+            case 3 -> Color.ANSI_GREEN;
+            case 4 -> Color.ANSI_YELLOW;
+            case 5 -> Color.ANSI_BLUE;
+            case 6 -> Color.ANSI_PURPLE;
+            case 7 -> Color.ANSI_CYAN;
+            default -> Color.ANSI_WHITE;
+        };
     }
 }

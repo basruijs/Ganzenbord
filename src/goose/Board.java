@@ -38,9 +38,9 @@ public class Board {
 
             StringBuilder printedGeese = new StringBuilder();
 
-            for (int j = 0; j < geese.length; j++) {
-                if (geese[j].getPosition() == i) {
-                    printedGeese.append(geese[j]);
+            for (Goose value : geese) {
+                if (value.getPosition() == i) {
+                    printedGeese.append(value);
                 }
             }
 
@@ -70,11 +70,4 @@ public class Board {
         return squares[i];
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
 }

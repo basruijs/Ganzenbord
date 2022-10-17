@@ -52,6 +52,15 @@ public class Goose {
         if (!skipTurn && !isImprisoned) {
             try {
                 this.position += movement;
+                if(Game.d1.getValue()==Game.d2.getValue() && Config.murder) {
+                    for (int i = 0; i < geese.length; i++) {
+                        if (geese[i].position == this.position && geese[i] != this && !geese[i].isWon()) {
+                            geese[i].position = 0;
+                            System.out.println(Emoji.KNIFE + " The " + this.getName() +
+                                    " goose murdered the " + geese[i].getName() + " goose!");
+                        }
+                    }
+                }
                 checkPosition(this, geese, origin, movement, board);
             } catch (Exception e) {
                 int overflow = this.position - (board.size - 1);

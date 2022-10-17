@@ -16,6 +16,8 @@ public class Config {
     public static boolean lastPlayerFreedPrison = false;
     public static boolean passToFreePrison = false;
 
+    public static boolean murder = false;
+
     public static int boardSize = 64;
 
     public static final int FINISH_SQUARE = boardSize - 1;
@@ -44,6 +46,7 @@ public class Config {
         Config.passToFreeWell = Boolean.parseBoolean(prop.getProperty("passToFreeWell"));
         Config.lastPlayerFreedPrison = Boolean.parseBoolean(prop.getProperty("lastPlayerFreedPrison"));
         Config.passToFreePrison = Boolean.parseBoolean(prop.getProperty("passToFreePrison"));
+        Config.murder = Boolean.parseBoolean(prop.getProperty("murder"));
 
 
         game.startup();

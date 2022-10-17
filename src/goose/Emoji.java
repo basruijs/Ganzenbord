@@ -48,5 +48,6 @@ public abstract class Emoji {
     public static String BAT = "\uD83E\uDD87"; //🦇
     public static String SPIDER = "\uD83D\uDD77"; //🕷
     public static String SNAKE = "\uD83D\uDC0D"; //🐍
+    public static String KNIFE = "\uD83D\uDD2A"; //🔪
 
 }

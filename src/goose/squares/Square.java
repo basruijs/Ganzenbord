@@ -16,17 +16,15 @@ public class Square {
 
     public boolean checkBump(Goose[] geese, int origin, Board board, Goose goose) {
         if (!Config.shareSpaces) {
-            for (int i = 0; i < geese.length; i++) {
-                if (board.getSquare(goose.getPosition()) == board.getSquare(geese[i].getPosition()) && goose != geese[i]) {
+            for (Goose value : geese) {
+                if (board.getSquare(goose.getPosition()) == board.getSquare(value.getPosition()) && goose != value) {
                     goose.setPosition(origin);
-                    System.out.println(Emoji.HURT + " You bumped into the " + geese[i].getName() + " goose! ");
+                    System.out.println(Emoji.HURT + " You bumped into the " + value.getName() + " goose! ");
                     return true;
                 }
             }
-            return false;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
