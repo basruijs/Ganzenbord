@@ -34,7 +34,7 @@ public class Goose{
     }
 
     public String getName() {
-        return  this + " " + printColor + color + Color.ANSI_RESET;
+        return this + " " + printColor + color + Color.ANSI_RESET;
     }
 
     public void walk(int movement, Board board, Goose[] geese){

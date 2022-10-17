@@ -30,11 +30,11 @@ public interface ColorPicker {
         case "5":
             goose.color="purple";
             return Color.ANSI_PURPLE;
-        case "pink":
-        case "roze":
+        case "white":
+        case "wit":
         case "6":
-            goose.color="pink";
-            return Color.ANSI_PINK;
+            goose.color="white";
+            return Color.ANSI_WHITE;
         case "gray":
         case "grijs":
         case "grey":
@@ -50,11 +50,11 @@ public interface ColorPicker {
         case "9":
             goose.color="cyan";
             return Color.ANSI_CYAN;
-        case "white":
-        case "wit":
+        case "pink":
+        case "roze":
         case "10":
-            goose.color="white";
-            return Color.ANSI_WHITE;
+            goose.color="pink";
+            return Color.ANSI_PINK;
         case "black":
         case "zwart":
         case "11":

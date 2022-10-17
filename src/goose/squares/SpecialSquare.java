@@ -23,7 +23,7 @@ public class SpecialSquare extends Square {
 
     @Override
     public void run(int totalValue, Goose goose, Board board, Goose[] geese, int origin) {
-        System.out.println("Unknown space, please perish.");
+        System.out.println(Emoji.GUN + " Unknown space, please perish. ");
 
     }
 

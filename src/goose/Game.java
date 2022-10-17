@@ -6,12 +6,12 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class Game{
+public class Game {
 
     public static boolean keepGoing = true;
     Goose[] geese;
-    Die d1 = new Die();
-    Die d2 = new Die();
+    public static Die d1 = new Die();
+    public static Die d2 = new Die();
     Board board;
 
     int player;
@@ -105,46 +105,41 @@ public class Game{
     }
 
     void playGame() throws InterruptedException {
-        while (keepGoing) {
-            if (!goose.isWon()) {
-                int origin = goose.getPosition();
+            for (int i = 0; i < geese.length; i++) {
+                Goose goose = geese[i];
+                if (!goose.isWon()) {
+                    int origin = goose.getPosition();
 
-                Scanner s = new Scanner(System.in);
-                System.out.println("Press ENTER to roll dice, honorable " + goose.printColor + goose.getName() +
-                        Color.ANSI_RESET + " goose. Your current position is " + goose.getPosition());
-                String input = "";
+                    Scanner s = new Scanner(System.in);
+                    System.out.println("Press ENTER to roll dice, honorable " + goose.printColor + goose.getName() +
+                            Color.ANSI_RESET + " goose. Your current position is " + goose.getPosition());
+                    String input = "";
 
-                if (goose.isBot()) {
-                    TimeUnit.SECONDS.sleep(1);
-                } else {
-                    input = s.nextLine();
-                }
-
-                int totalValue = rollDice();
-
-                totalValue=cheat(input, totalValue);
-
-
-                System.out.println("Goose " + goose.getName() + " departs from space " + goose.getPosition());
-                //TODO move to GooseSquare
-                if (goose.isFirstRoll() || (goose.position == 0 && Config.antiInstaWin)) {
-                    goose.setFirstRoll(false);
-                    if(totalValue == 9){
-                        firstRollMove(board,goose,geese,origin);
+                    if (goose.isBot()) {
+                        TimeUnit.SECONDS.sleep(1);
                     } else {
-                        goose.move(totalValue, board, geese, origin);
+                        input = s.nextLine();
                     }
-                } else {
-                    goose.walk(totalValue, board, geese);
-                }
 
-                System.out.println("Goose " + goose.getName() + " is on " + goose.getPosition());
-                board.printBoard(origin, geese, goose);
+                    int totalValue = rollDice();
+
+                    totalValue = cheat(input, totalValue);
+
+
+                    System.out.println("Goose " + goose.getName() + " departs from space " + goose.getPosition());
+                    goose.walk(totalValue, board, geese);
+
+                    System.out.println("Goose " + goose.getName() + " is on " + goose.getPosition());
+                    board.printBoard(origin, geese, goose);
+                    if(!keepGoing){
+                        break;
+                    }
+                    if (i + 1 >= geese.length) {
+                        i = -1;
+                    }
+                }
             }
-            //TODO gans for loop maken
-            nextPlayer();
         }
-    }
 
     private int rollDice() {
         d1.roll();
@@ -167,23 +162,5 @@ public class Game{
 
         }
         return totalValue;
-    }
-
-    private void firstRollMove(Board board, Goose goose, Goose[] geese, int origin) {
-        if ((d1.getValue() == 5 || d2.getValue() == 5) && (d1.getValue() == 4 || d2.getValue() == 4)) {
-            goose.move(53, board, geese, origin);
-            System.out.println("You jumped to 53");
-        } else if ((d1.getValue() == 6 || d2.getValue() == 6) && (d1.getValue() == 3 || d2.getValue() == 3)) {
-            goose.move(26, board, geese, origin);
-            System.out.println("You jumped to 26");
-        }
-    }
-
-    private void nextPlayer() {
-        player++;
-        if (player >= geese.length) {
-            player = 0;
-        }
-        goose = geese[player];
     }
 }

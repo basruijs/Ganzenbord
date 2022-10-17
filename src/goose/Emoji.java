@@ -1,7 +1,6 @@
 package goose;
 
 public abstract class Emoji {
-    //TODO klassen maken
     public static String CHECKERED_FLAG = "\uD83C\uDFC1"; //🏁
     public static String DUCK = "\uD83E\uDD86"; //🦆
     public static String ARROW_RIGHT="➡"; //➡
@@ -30,4 +29,24 @@ public abstract class Emoji {
     public static String HATCHING_EGG = "\uD83D\uDC23"; //🐣
     public static String HURT = "\uD83E\uDD15"; //🤕
     public static String ROBOT = "\uD83E\uDD16"; //🤖
+    public static String GUN = "\uD83D\uDD2B"; //🔫
+    public static String CROSSED_SWORDS = "⚔"; //⚔
+    public static String SHIELD = "\uD83D\uDEE1"; //🛡
+    public static String DOOR = "\uD83D\uDEAA"; //🚪
+    public static String PENGUIN = "\uD83D\uDC27"; //🐧
+    public static String EAGLE = "\uD83E\uDD85"; //🦅
+    public static String OWL = "\uD83E\uDD89"; //🦉
+    public static String DRAGON = "\uD83D\uDC09"; //🐉
+    public static String DRAGON_FACE = "\uD83D\uDC32"; //🐲
+    public static String TURKEY = "🦃"; //🦃
+    public static String ROOSTER = "\uD83D\uDC13"; //🐓
+    public static String CHICKEN = "\uD83D\uDC14"; //🐔
+    public static String TURTLE = "\uD83D\uDC22"; //🐢
+    public static String BEE = "\uD83D\uDC1D"; //🐝
+    public static String BOMB = "\uD83D\uDCA3"; //💣
+    public static String BOW = "\uD83C\uDFF9"; //🏹
+    public static String BAT = "\uD83E\uDD87"; //🦇
+    public static String SPIDER = "\uD83D\uDD77"; //🕷
+    public static String SNAKE = "\uD83D\uDC0D"; //🐍
+
 }
