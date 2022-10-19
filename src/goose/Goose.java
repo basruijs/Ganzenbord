@@ -61,6 +61,7 @@ public class Goose {
                         }
                     }
                 }
+                freeGoose(origin, position, geese);
                 checkPosition(this, geese, origin, movement, board);
             } catch (Exception e) {
                 int overflow = this.position - (board.size - 1);
@@ -85,8 +86,8 @@ public class Goose {
         if ((hasPassed(origin, position, 31) && Config.passToFreeWell) || this.position == 31) {
             for (Goose goose : geese) {
                 if (goose != this && (goose.isImprisoned && goose.getPosition() == 31)) {
-                    System.out.println("the " + this.getName() + " goose has helped the "
-                            + goose.getName() + "out of the well");
+                    System.out.println("The " + this.getName() + " goose has helped the "
+                            + goose.getName() + " goose out of the well");
                     goose.free();
 
                 }
@@ -96,8 +97,8 @@ public class Goose {
         if ((hasPassed(origin, position, 52) && Config.passToFreePrison) || this.position == 52) {
             for (Goose goose : geese) {
                 if (goose != this && (goose.isImprisoned && goose.getPosition() == 52)) {
-                    System.out.println("the " + this.getName() + " goose has broken the "
-                            + goose.getName() + " out of prison");
+                    System.out.println("The " + this.getName() + " goose has broken the "
+                            + goose.getName() + " goose out of prison");
                     goose.free();
 
                 }
@@ -106,7 +107,7 @@ public class Goose {
     }
 
     private boolean hasPassed(int origin, int position, int square) {
-        return (square < origin && square > position);
+        return (square < origin && square > position) || (square > origin && square < position) ;
     }
 
     public void checkPosition(Goose goose, Goose[] geese, int origin, int totalValue, Board board) {
