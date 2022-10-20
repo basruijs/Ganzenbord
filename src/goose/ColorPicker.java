@@ -65,28 +65,28 @@ public interface ColorPicker {
             case "12":
                 goose.color = "brown";
                 return Color.ANSI_BROWN;
-            case "light blue":
-            case "lichtblauw":
+            case "teal":
             case "13":
-                goose.color = "light blue";
-                return Color.ANSI_LIGHT_BLUE;
+                goose.color = "teal";
+                return Color.ANSI_TEAL;
+
             case "light gray":
             case "light grey":
             case "licht grijs":
             case "14":
                 goose.color = "light grey";
                 return Color.ANSI_LIGHT_GRAY;
-
             case "dark blue":
             case "donkerblauw":
             case "15":
                 goose.color = "dark blue";
                 return Color.ANSI_BLUE;
-            case "bright red":
-            case "fel rood":
+            case "dark red":
+            case "donkerrood":
             case "16":
-                goose.color = "bright red";
-                return Color.ANSI_BRIGHT_RED;
+                goose.color = "dark red";
+                return Color.ANSI_DARK_RED;
+
 
             default:
                 return randomizeColor();
